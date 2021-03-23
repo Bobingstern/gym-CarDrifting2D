@@ -61,7 +61,7 @@ while True:
 
 There are numerous hidden Reward Gates around the track that the agent must cross to get a reward
 
-The agent will receive a constant negative reward or 0.01 unless it either crosses a reward gate which will result in +1 reward or crashes into the wall which will result a -1 reward and cause the ```done``` flag to become ```True``` indicating that you should call ```env.reset()```
+The agent will receive a constant negative reward of -0.01 unless it either crosses a reward gate which will result in +1 reward or crashes into the wall which will result a -1 reward and cause the ```done``` flag to become ```True``` indicating that you should call ```env.reset()```
 
 <h2>For those interested in the game Physics!</h2>
 
