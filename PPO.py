@@ -1,3 +1,5 @@
+############# PPO Code by nikhilbarhate99 at https://github.com/nikhilbarhate99/PPO-PyTorch ##################
+
 import torch
 import torch.nn as nn
 from torch.distributions import Categorical
