@@ -1,4 +1,4 @@
-# gym-CarDrifting2D
+# Top Down Car Driving for Gym
 <h2>A custom gym environment for a top down drifting game</h2>
 
 <p align="left">
