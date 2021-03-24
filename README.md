@@ -14,28 +14,29 @@ pip install gym-CarDrifting2D
 
 <h4>Here is an example with random actions:</h4>
 
-```
+```python
 import gym
 import gym_Drifting2D
 import random
 
-
-env = gym.make("CarDrifting2D-v0", drag=0.9, power=0.7, turnSpeed=0.04, angularDrag=0.6) 
-
-#Parameter Definitions:
-#Drag, how much the car skids, the higher the more skid
-#power, how fast the car accelerates
-#turnSpeed, how fast the car turns
-#angularDrag, how much the car spins, the higher the more spin
-
+env = gym.make("CarDrifting2D-v0", drag=0.9, power=1, turnSpeed=0.04, angularDrag=0.6, multiInputs=False, showGates=False, constantAccel=False)
+# Parameter Definitions:
+# Drag, how much the car skids, the higher the more skid
+# power, how fast the car accelerates
+# turnSpeed, how fast the car turns
+# angularDrag, how much the car spins, the higher the more spin
+# Multi Inputs means the agent can go both forward/backward AND left or right simultaneously
+# Show Gates is to show the reward gates
+# constant accel is to accelerate constantly
 env.reset()
 
 num_states = env.states
 num_actions = env.actions
+
 while True:
     action = random.randint(0, num_actions)
     state, reward, done, _ = env.step(action)
-    if (done):
+    if done:
         env.reset()
     env.render()
 ```
@@ -66,7 +67,7 @@ The agent will receive a constant negative reward of -0.01 unless it either cros
 <h2>For those interested in the game Physics!</h2>
 
 The agent has a vector called ```pos``` which stores the car's location, a vector called ```vel``` which stores the car's velocity along with a variable called ```drag``` which is it's drag. It has a variable called ```power``` which is how fast the car accelerates and 3 more variables which are ```angularVel``` which is the Angular Velocity ```angularDrag``` which is the Angular Drag and ```turnSpeed``` which is the turning speed. It also has one more variable called ```angle``` which is the angle of the car affected by ```angularVel```.
-```
+```python
 self.pos = [650, 200]
 self.velX = 0
 self.velY = 0
@@ -78,7 +79,7 @@ self.turnSpeed = turnSpeed
 self.angle = math.radians(-90)
 ```
 Each step the following operations are executed
-```
+```python
 self.pos[0] += self.velX
 self.pos[1] += self.velY
 
@@ -88,7 +89,7 @@ self.angle += self.angularVel
 self.angularVel *= self.angularDrag
 ```
 And here are the control functions:
-```
+```python
 def acc(self):
     self.velX += math.sin(self.angle) * self.power
     self.velY += math.cos(self.angle) * self.power
