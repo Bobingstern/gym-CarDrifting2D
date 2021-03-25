@@ -6,6 +6,9 @@
   <!--<br/><i>State-space observation mode.</i>-->
 </p>
 
+<h3>Requirements:</h3>
+Python 3.8+
+
 <h3>Install using the pip package:</h3> 
 
 ```
