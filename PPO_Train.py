@@ -5,28 +5,29 @@ import torch
 import torch.nn as nn
 from torch.distributions import Categorical
 from PPO import *
+import matplotlib.pyplot as plt
 
 def main():
     ############## Hyperparameters ##############
-    ############# PPO Code by nikhilbarhate99 at https://github.com/nikhilbarhate99/PPO-PyTorch ##################
     env_name = "CarDrifting2D-v0"
     # creating environment
-    env = gym.make(env_name)
+    env = gym.make(env_name, drag=0.93)
     state_dim = env.states
     action_dim = env.actions
     render = True
     solved_reward = 1000  # stop training if avg_reward > solved_reward
     log_interval = 20  # print avg reward in the interval
     max_episodes = 50000  # max training episodes
-    max_timesteps = 1000  # max timesteps in one episode
+    max_timesteps = 5000  # max timesteps in one episode
     n_latent_var = 64  # number of variables in hidden layer
-    update_timestep = 2000  # update policy every n timesteps
-    lr = 0.002
+    update_timestep = 100  # update policy every n timesteps
+    lr = 5e-4
     betas = (0.9, 0.999)
     gamma = 0.99  # discount factor
     K_epochs = 4  # update policy for K epochs
     eps_clip = 0.2  # clip parameter for PPO
     random_seed = None
+    rewards = []
     #############################################
 
     if random_seed:
@@ -35,6 +36,7 @@ def main():
 
     memory = Memory()
     ppo = PPO(state_dim, action_dim, n_latent_var, lr, betas, gamma, K_epochs, eps_clip)
+
     print(lr, betas)
 
     # logging variables
@@ -45,6 +47,7 @@ def main():
     # training loop
     for i_episode in range(1, max_episodes + 1):
         state = env.reset()
+
         for t in range(max_timesteps):
             timestep += 1
 
@@ -71,6 +74,11 @@ def main():
         avg_length += t
 
         # stop training if avg_reward > solved_reward
+        name = "Data/"+env_name
+        f = open(name, "a+")
+        f.write(str(running_reward)+"\n")
+        f.close()
+
         if running_reward > (log_interval * solved_reward):
             print("########## Solved! ##########")
             torch.save(ppo.policy.state_dict(), './PPO_{}.pth'.format(env_name+"Solved"))
@@ -82,9 +90,10 @@ def main():
             running_reward = int((running_reward / log_interval))
 
             print('Episode {} \t avg length: {} \t reward: {}'.format(i_episode, avg_length, running_reward))
-            torch.save(ppo.policy.state_dict(), './PPO_{}.pth'.format(env_name))
+            torch.save(ppo.policy.state_dict(), './SavedModels/PPO_{}.pth'.format(env_name))
             running_reward = 0
             avg_length = 0
+
 
 
 if __name__ == '__main__':
