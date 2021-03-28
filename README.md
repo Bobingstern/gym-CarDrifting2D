@@ -2,7 +2,7 @@
 <h2>A custom gym environment for a top down drifting game</h2>
 
 <p align="left">
-  <img width="50%" src="https://raw.githubusercontent.com/Bobingstern/gym-CarDrifting2D/main/images/Main.png"></img>
+  <img width="50%" src="https://raw.githubusercontent.com/Bobingstern/gym-CarDrifting2D/main/images/ezgif.com-gif-maker.gif"></img>
   <!--<br/><i>State-space observation mode.</i>-->
 </p>
 
